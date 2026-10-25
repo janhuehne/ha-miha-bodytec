@@ -1,0 +1,71 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "miha bodytec LogX",
+        "description": "Sign in with your training.miha-bodytec.com credentials (usually the email your studio activated).",
+        "data": {
+          "username": "Email / username",
+          "password": "Password"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate miha bodytec",
+        "description": "Login for {username} failed. Enter the current password.",
+        "data": {
+          "username": "Email / username",
+          "password": "Password"
+        }
+      },
+      "reconfigure": {
+        "title": "Update miha bodytec credentials",
+        "data": {
+          "username": "Email / username",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password",
+      "cannot_connect": "Could not reach training.miha-bodytec.com",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "This miha bodytec account is already configured",
+      "reauth_successful": "Re-authentication successful",
+      "reconfigure_successful": "Credentials updated",
+      "wrong_account": "Credentials belong to a different account"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_appointment": { "name": "Next appointment" },
+      "next_appointment_name": { "name": "Next appointment name" },
+      "days_until_next_training": { "name": "Days until next training" },
+      "upcoming_count": { "name": "Upcoming appointments" },
+      "past_count": { "name": "Past appointments" },
+      "membership_until": { "name": "Membership until" },
+      "contract_name": { "name": "Contract" },
+      "studio_name": { "name": "Studio" },
+      "studio_phone": { "name": "Studio phone" },
+      "studio_email": { "name": "Studio email" },
+      "studio_city": { "name": "Studio city" },
+      "cancellation_deadline_hours": { "name": "Cancellation deadline" },
+      "booking_lead_time_minutes": { "name": "Booking lead time" },
+      "slot_duration_minutes": { "name": "Slot duration" },
+      "bookable_type_count": { "name": "Bookable types" },
+      "member_name": { "name": "Member" },
+      "trainings_this_week": { "name": "Trainings this week" },
+      "trainings_this_month": { "name": "Trainings this month" }
+    },
+    "binary_sensor": {
+      "membership_active": { "name": "Membership active" },
+      "training_today": { "name": "Training today" },
+      "training_tomorrow": { "name": "Training tomorrow" },
+      "online_booking_allowed": { "name": "Online booking allowed" }
+    },
+    "calendar": {
+      "appointments": { "name": "Appointments" }
+    }
+  }
+}

@@ -1,0 +1,99 @@
+refresh:
+  name: Refresh
+  description: Reload appointments and membership data from the LogX portal.
+
+cancel_appointment:
+  name: Cancel appointment
+  description: Cancel a booked training appointment (respects studio cancellation deadline).
+  fields:
+    appointment_id:
+      name: Appointment ID
+      description: Portal appointment id (see sensor attributes).
+      required: true
+      selector:
+        text:
+    online_scheduling_partner_id:
+      name: Online scheduling partner ID
+      required: false
+      selector:
+        number:
+          mode: box
+
+book_appointment:
+  name: Book appointment
+  description: Book a free training slot.
+  fields:
+    date:
+      name: Date
+      description: Day as YYYY-MM-DD.
+      required: true
+      selector:
+        date:
+    start:
+      name: Start
+      description: Start datetime as YYYY-MM-DD HH:MM:SS (studio local).
+      required: true
+      selector:
+        text:
+    end:
+      name: End
+      description: End datetime as YYYY-MM-DD HH:MM:SS (studio local).
+      required: true
+      selector:
+        text:
+    type_id:
+      name: Appointment type ID
+      required: true
+      selector:
+        number:
+          mode: box
+    studio_id:
+      name: Studio ID
+      required: false
+      selector:
+        number:
+          mode: box
+    online_scheduling_partner_id:
+      name: Online scheduling partner ID
+      required: false
+      selector:
+        number:
+          mode: box
+
+reschedule_appointment:
+  name: Reschedule appointment
+  description: Move an existing appointment to a new slot.
+  fields:
+    appointment_id:
+      name: Appointment ID
+      required: true
+      selector:
+        text:
+    start:
+      name: Start
+      required: true
+      selector:
+        text:
+    end:
+      name: End
+      required: true
+      selector:
+        text:
+    type_id:
+      name: Appointment type ID
+      required: true
+      selector:
+        number:
+          mode: box
+    studio_id:
+      name: Studio ID
+      required: false
+      selector:
+        number:
+          mode: box
+    online_scheduling_partner_id:
+      name: Online scheduling partner ID
+      required: false
+      selector:
+        number:
+          mode: box

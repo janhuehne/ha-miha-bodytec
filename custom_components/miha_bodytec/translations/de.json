@@ -1,0 +1,71 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "miha bodytec LogX",
+        "description": "Anmeldung mit den Zugangsdaten von training.miha-bodytec.com (meist die vom Studio freigeschaltete E-Mail).",
+        "data": {
+          "username": "E-Mail / Benutzername",
+          "password": "Passwort"
+        }
+      },
+      "reauth_confirm": {
+        "title": "miha bodytec erneut anmelden",
+        "description": "Login für {username} fehlgeschlagen. Bitte aktuelles Passwort eingeben.",
+        "data": {
+          "username": "E-Mail / Benutzername",
+          "password": "Passwort"
+        }
+      },
+      "reconfigure": {
+        "title": "miha bodytec Zugangsdaten aktualisieren",
+        "data": {
+          "username": "E-Mail / Benutzername",
+          "password": "Passwort"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Benutzername oder Passwort ungültig",
+      "cannot_connect": "training.miha-bodytec.com nicht erreichbar",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "abort": {
+      "already_configured": "Dieses miha-bodytec-Konto ist bereits eingerichtet",
+      "reauth_successful": "Erneute Anmeldung erfolgreich",
+      "reconfigure_successful": "Zugangsdaten aktualisiert",
+      "wrong_account": "Zugangsdaten gehören zu einem anderen Konto"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "next_appointment": { "name": "Nächster Termin" },
+      "next_appointment_name": { "name": "Nächster Termin (Name)" },
+      "days_until_next_training": { "name": "Tage bis zum nächsten Training" },
+      "upcoming_count": { "name": "Kommende Termine" },
+      "past_count": { "name": "Vergangene Termine" },
+      "membership_until": { "name": "Mitgliedschaft bis" },
+      "contract_name": { "name": "Vertrag" },
+      "studio_name": { "name": "Studio" },
+      "studio_phone": { "name": "Studio Telefon" },
+      "studio_email": { "name": "Studio E-Mail" },
+      "studio_city": { "name": "Studio Ort" },
+      "cancellation_deadline_hours": { "name": "Stornierungsfrist" },
+      "booking_lead_time_minutes": { "name": "Buchungsvorlauf" },
+      "slot_duration_minutes": { "name": "Termindauer" },
+      "bookable_type_count": { "name": "Buchbare Terminarten" },
+      "member_name": { "name": "Mitglied" },
+      "trainings_this_week": { "name": "Trainings diese Woche" },
+      "trainings_this_month": { "name": "Trainings diesen Monat" }
+    },
+    "binary_sensor": {
+      "membership_active": { "name": "Mitgliedschaft aktiv" },
+      "training_today": { "name": "Training heute" },
+      "training_tomorrow": { "name": "Training morgen" },
+      "online_booking_allowed": { "name": "Online-Buchung erlaubt" }
+    },
+    "calendar": {
+      "appointments": { "name": "Termine" }
+    }
+  }
+}

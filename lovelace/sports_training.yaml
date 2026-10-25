@@ -1,0 +1,185 @@
+# Sports / Training dashboard for miha bodytec (LogX)
+#
+# Install:
+# 1. Copy custom_components/miha_bodytec into HA and add the integration
+# 2. Settings → Dashboards → Add dashboard → paste this YAML (raw config)
+#    or include via: !include lovelace/sports_training.yaml
+#
+# Entity IDs assume device name "miha bodytec" (default). Adjust if renamed.
+
+title: Sport & Training
+views:
+  - title: Training
+    path: training
+    icon: mdi:dumbbell
+    type: sections
+    max_columns: 3
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nächstes Training
+            heading_style: title
+            icon: mdi:calendar-clock
+
+          - type: tile
+            entity: binary_sensor.miha_bodytec_training_today
+            name: Heute
+            color: green
+
+          - type: tile
+            entity: binary_sensor.miha_bodytec_training_tomorrow
+            name: Morgen
+            color: amber
+
+          - type: tile
+            entity: sensor.miha_bodytec_days_until_next_training
+            name: Tage bis Termin
+            color: blue
+
+          - type: markdown
+            content: >
+              {% set next = states('sensor.miha_bodytec_next_appointment') %}
+              {% set name = states('sensor.miha_bodytec_next_appointment_name') %}
+              {% set days = states('sensor.miha_bodytec_days_until_next_training') %}
+              {% if next not in ['unknown', 'unavailable', 'none', ''] %}
+              ### {{ name }}
+              **{{ as_timestamp(next) | timestamp_custom('%A, %d.%m.%Y · %H:%M') }}**
+              {% if days not in ['unknown', 'unavailable'] %}
+              (in {{ days }} Tag{% if days | int != 1 %}en{% endif %})
+              {% endif %}
+              {% else %}
+              Kein kommender Termin gebucht.
+              {% endif %}
+
+          - type: entities
+            title: Kommende Termine
+            show_header_toggle: false
+            entities:
+              - type: attribute
+                entity: sensor.miha_bodytec_upcoming_count
+                attribute: appointments
+                name: Liste (Attribute)
+              - entity: sensor.miha_bodytec_upcoming_count
+                name: Anzahl kommende
+              - entity: sensor.miha_bodytec_trainings_this_week
+                name: Diese Woche
+              - entity: sensor.miha_bodytec_trainings_this_month
+                name: Dieser Monat
+
+          - type: markdown
+            title: Termine
+            content: >
+              {% set apps = state_attr('sensor.miha_bodytec_upcoming_count', 'appointments') or [] %}
+              {% if apps %}
+              {% for a in apps[:8] %}
+              - **{{ a.name }}** — {{ a.start }}  
+                _{% if a.studio_name %}{{ a.studio_name }}{% endif %}{% if a.studio_city %} · {{ a.studio_city }}{% endif %}_
+              {% endfor %}
+              {% else %}
+              _Keine kommenden Termine_
+              {% endif %}
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Kalender
+            heading_style: title
+            icon: mdi:calendar-month
+
+          - type: calendar
+            entities:
+              - calendar.miha_bodytec_appointments
+            initial_view: listWeek
+
+          - type: heading
+            heading: Mitgliedschaft
+            heading_style: title
+            icon: mdi:card-account-details
+
+          - type: tile
+            entity: binary_sensor.miha_bodytec_membership_active
+            name: Mitgliedschaft
+            color: green
+
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: sensor.miha_bodytec_member_name
+                name: Mitglied
+              - entity: sensor.miha_bodytec_membership_until
+                name: Gültig bis
+              - entity: sensor.miha_bodytec_contract_name
+                name: Vertrag
+              - entity: binary_sensor.miha_bodytec_online_booking_allowed
+                name: Online-Buchung
+              - entity: sensor.miha_bodytec_cancellation_deadline_hours
+                name: Stornierungsfrist
+              - entity: sensor.miha_bodytec_booking_lead_time_minutes
+                name: Buchungsvorlauf
+              - entity: sensor.miha_bodytec_slot_duration_minutes
+                name: Slot-Dauer
+
+      - type: grid
+        cards:
+          - type: heading
+            heading: Studio
+            heading_style: title
+            icon: mdi:store-marker
+
+          - type: markdown
+            content: >
+              {% set studio = states('sensor.miha_bodytec_studio_name') %}
+              {% set city = states('sensor.miha_bodytec_studio_city') %}
+              {% set phone = states('sensor.miha_bodytec_studio_phone') %}
+              {% set email = states('sensor.miha_bodytec_studio_email') %}
+              ### {{ studio }}
+              {{ city }}
+
+              {% if phone not in ['unknown', 'unavailable', ''] %}
+              Telefon: [{{ phone }}](tel:{{ phone | replace(' ', '') }})
+              {% endif %}
+
+              {% if email not in ['unknown', 'unavailable', ''] %}
+              E-Mail: [{{ email }}](mailto:{{ email }})
+              {% endif %}
+
+              [Terminportal öffnen](https://training.miha-bodytec.com/)
+
+          - type: entities
+            title: Verlauf
+            show_header_toggle: false
+            entities:
+              - entity: sensor.miha_bodytec_past_count
+                name: Letzte Termine (Anzahl)
+
+          - type: markdown
+            title: Letzte Trainings
+            content: >
+              {% set apps = state_attr('sensor.miha_bodytec_past_count', 'appointments') or [] %}
+              {% if apps %}
+              {% for a in apps[:6] %}
+              - {{ a.start }} — **{{ a.name }}**
+              {% endfor %}
+              {% else %}
+              _Kein Verlauf geladen_
+              {% endif %}
+
+          - type: entities
+            title: Aktionen
+            show_header_toggle: false
+            entities:
+              - type: button
+                name: Daten aktualisieren
+                icon: mdi:refresh
+                action_name: Refresh
+                tap_action:
+                  action: call-service
+                  service: miha_bodytec.refresh
+              - type: button
+                name: Portal öffnen
+                icon: mdi:open-in-new
+                action_name: Öffnen
+                tap_action:
+                  action: url
+                  url_path: https://training.miha-bodytec.com/

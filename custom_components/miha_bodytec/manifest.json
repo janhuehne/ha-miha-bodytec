@@ -1,0 +1,14 @@
+{
+  "domain": "miha_bodytec",
+  "name": "miha bodytec",
+  "codeowners": ["@janhuehne"],
+  "config_flow": true,
+  "documentation": "https://github.com/janhuehne/ha-miha-bodytec",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/janhuehne/ha-miha-bodytec/issues",
+  "loggers": ["custom_components.miha_bodytec"],
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.1.0"
+}
